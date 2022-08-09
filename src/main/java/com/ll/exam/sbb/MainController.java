@@ -1,5 +1,6 @@
 package com.ll.exam.sbb;
 
+import com.ll.exam.sbb.entity.Article;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -7,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -122,4 +125,25 @@ public class MainController {
         return "세션변수 %s의 값이 %s 입니다.".formatted(name, value);
     }
 
+    List<Article> articleList = new ArrayList<>();
+
+    @GetMapping("/addArticle")
+    @ResponseBody
+    public String updateArticle(String title, String body) {
+        Article article = new Article(title, body);
+        articleList.add(article);
+        return "%d번 글이 등록되었습니다.".formatted(article.getId());
+    }
+
+    @GetMapping("/article/{id}")
+    @ResponseBody
+    public Article getArticle(@PathVariable int id) {
+        Article article = articleList
+                .stream()
+                .filter(a -> a.getId() == id) // 1번
+                .findFirst()
+                .get();
+
+        return article;
+    }
 }
