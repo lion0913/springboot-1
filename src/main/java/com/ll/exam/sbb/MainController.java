@@ -3,6 +3,12 @@ package com.ll.exam.sbb;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 @Controller
 public class MainController {
     private int increaseNo = -1;
@@ -58,11 +64,30 @@ public class MainController {
         return a - b;
     }
 
-    @GetMapping("/increase")
+    @GetMapping("/gugudan")
     @ResponseBody
-    public int showIncrease() {
-        increaseNo++;
+    public String showGugudan(Integer dan, Integer limit) {
+        if (limit == null) {
+            limit = 9;
+        }
 
-        return increaseNo;
+        if (dan == null) {
+            dan = 9;
+        }
+        Integer finalDan = dan;
+        return IntStream.rangeClosed(1, limit)
+                .mapToObj(i -> "%d * %d = %d".formatted(finalDan, i, finalDan * i))
+                .collect(Collectors.joining("<br>\n"));
     }
+
+    @GetMapping("/plus2")
+    @ResponseBody
+    public void showPlus2(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        int a = Integer.parseInt(req.getParameter("a"));
+        int b = Integer.parseInt(req.getParameter("b"));
+
+        resp.getWriter().append(a + b + "");
+    }
+
+
 }
