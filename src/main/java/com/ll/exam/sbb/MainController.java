@@ -146,4 +146,37 @@ public class MainController {
 
         return article;
     }
+
+    @GetMapping("/deleteArticle/{id}")
+    @ResponseBody
+    public String deleteArticle(@PathVariable int id) {
+        Article article = articleList
+                .stream()
+                .filter(a -> a.getId() == id) // 1번
+                .findFirst()
+                .get();
+        if(article == null) {
+            return  "존재하지 않는 게시물입니다.";
+        }
+        articleList.remove(article);
+
+        return "%d번 게시물이 삭제되었습니다.".formatted(article.getId());
+    }
+
+    @GetMapping("/modifyArticle/{id}")
+    @ResponseBody
+    public String modifyArticle(@PathVariable int id, String title, String body) {
+        Article article = articleList
+                .stream()
+                .filter(a -> a.getId() == id) // 1번
+                .findFirst()
+                .get();
+        if(article == null) {
+            return  "존재하지 않는 게시물입니다.";
+        }
+        article.setTitle(title);
+        article.setBody(body);
+
+        return "%d번 게시물 수정에 성공했습니다.".formatted(id);
+    }
 }
