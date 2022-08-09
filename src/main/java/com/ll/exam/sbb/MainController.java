@@ -1,6 +1,7 @@
 package com.ll.exam.sbb;
 
 import com.ll.exam.sbb.entity.Article;
+import com.ll.exam.sbb.entity.Person;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -178,5 +179,14 @@ public class MainController {
         article.setBody(body);
 
         return "%d번 게시물 수정에 성공했습니다.".formatted(id);
+    }
+
+    List<Person> pList = new ArrayList<>();
+    @GetMapping("/add")
+    @ResponseBody
+    public Person addPeople(Person p) {
+        pList.add(p);
+
+        return p;
     }
 }
