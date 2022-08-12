@@ -69,4 +69,25 @@ public class AnswerRepositoryTest {
         a.setCreateDate(LocalDateTime.now());
         answerRepository.save(a);
     }
+
+    @Test
+    void 관련된_question_조회() {
+        Answer a = this.answerRepository.findById(1).get();
+        Question q = a.getQuestion();
+
+        assertThat(q.getId()).isEqualTo(1);
+    }
+
+    @Test
+    void question으로부터_관련된_질문들_조회() {
+        // SELECT * FROM question WHERE id = 1
+        Question q = questionRepository.findById(1).get();
+        // DB 연결이 끊김
+
+        // SELECT * FROM answer WHERE question_id = 1
+        List<Answer> answerList = q.getAnswerList();
+
+        assertThat(answerList.size()).isEqualTo(2);
+        assertThat(answerList.get(0).getContent()).isEqualTo("sbb는 질문답변 게시판 입니다.");
+    }
 }
