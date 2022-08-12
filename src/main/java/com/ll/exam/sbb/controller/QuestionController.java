@@ -14,11 +14,9 @@ public class QuestionController
     @Autowired
     private QuestionService questionService;
 
-    @RequestMapping("list")
+    @RequestMapping("/question/list")
     @ResponseBody
     public String showList() {
-        questionService.findById(1);
-
-        return "HI";
+        return "question_list";
     }
 }

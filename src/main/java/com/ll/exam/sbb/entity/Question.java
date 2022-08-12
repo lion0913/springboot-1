@@ -21,6 +21,11 @@ public class Question {
 
     private LocalDateTime createdDate;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "question",cascade = {CascadeType.ALL})
     private List<Answer> answerList;
+
+    public void addAnswer(Answer answer) {
+        answer.setQuestion(this);
+        getAnswerList().add(answer);
+    }
 }
