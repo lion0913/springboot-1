@@ -35,4 +35,6 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
     @Modifying
     @Query(value = "SET FOREIGN_KEY_CHECKS = 1", nativeQuery = true)
     void enableForeignKeyChecks();
+
+    List<Question> findBySubjectLike(String s);
 }

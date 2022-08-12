@@ -13,7 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.time.LocalDateTime;
 
 @SpringBootTest
-public class AnswerRepositoryTests {
+public class AnswerRepositoryTest {
     @Autowired
     private QuestionRepository questionRepository;
     @Autowired
@@ -26,14 +26,16 @@ public class AnswerRepositoryTests {
         createSampleData();
     }
 
-    private void createSampleData() {
+    private void clearData() {
+        QuestionRepositoryTest.clearData(questionRepository);
 
+        answerRepository.disableForeignKeyChecks();
+        answerRepository.truncate();
+        answerRepository.enableForeignKeyChecks();
     }
 
-    private void clearData() {
-        questionRepository.disableForeignKeyChecks();
-        answerRepository.truncate();
-        questionRepository.enableForeignKeyChecks();
+    private void createSampleData() {
+        QuestionRepositoryTest.createSampleData(questionRepository);
     }
 
     @Test
