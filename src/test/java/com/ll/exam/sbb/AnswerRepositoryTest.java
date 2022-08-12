@@ -9,8 +9,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -79,6 +82,8 @@ public class AnswerRepositoryTest {
     }
 
     @Test
+    @Transactional
+    @Rollback(false)
     void question으로부터_관련된_질문들_조회() {
         // SELECT * FROM question WHERE id = 1
         Question q = questionRepository.findById(1).get();
