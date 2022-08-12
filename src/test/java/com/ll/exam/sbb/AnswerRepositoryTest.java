@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 @SpringBootTest
 public class AnswerRepositoryTest {
     @Autowired
@@ -28,7 +30,7 @@ public class AnswerRepositoryTest {
 
     private void clearData() {
         QuestionRepositoryTest.clearData(questionRepository);
-
+        answerRepository.deleteAll(); // DELETE FROM question;
         answerRepository.truncateTable();
     }
 
