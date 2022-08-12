@@ -45,9 +45,7 @@ public class QuestionRepositoryTest {
     }
 
     public static void clearData(QuestionRepository questionRepository) {
-        questionRepository.disableForeignKeyChecks();
-        questionRepository.truncate();
-        questionRepository.enableForeignKeyChecks();
+        questionRepository.truncateTable();
     }
 
     private void clearData() {
