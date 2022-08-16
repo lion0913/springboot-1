@@ -19,9 +19,11 @@ public class AnswerController {
 
     @PostMapping("/create/{id}")
     public String create(Model model, @PathVariable("id") int id, String content) {
-        Question question = questionService.findById(id);
+        Question question = questionService.getQuestion(id);
+        System.out.println("id : "+id);
 
         //답변 등록 시작
+        answerService.create(question, content);
 
 
         //답변 등록 끝

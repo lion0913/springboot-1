@@ -17,6 +17,5 @@ public class Answer {
     private LocalDateTime createDate;
 
     @ManyToOne
-    @JoinColumn(foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private Question question;
 }

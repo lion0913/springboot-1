@@ -14,18 +14,6 @@ import java.util.Optional;
 public class QuestionService {
     private final QuestionRepository questionRepository;
 
-//    public QuestionService(QuestionRepository questionRepository) {
-//        this.questionRepository = questionRepository;
-//    }
-
-    public Question findById(int id) {
-        Question q1 = questionRepository.findById(2).get();
-        Question q2 = questionRepository.findById(2).get();
-        System.out.println(q2.getAnswerList());
-
-        return q2;
-    }
-
     public List<Question> findAll() {
         return questionRepository.findAll();
     }
