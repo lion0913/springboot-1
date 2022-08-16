@@ -11,8 +11,10 @@
         <td>
             [[${loop.count}]] / [[${loop.size}]]
         </td>
-        <td th:text="${question.subject}"></td>
-        <td th:text="${#temporals.format(question.createdDate, 'dd-MM-yyyy HH:mm')}"></td>
+        <td>
+            <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a>
+        </td>
+        <td th:text="${#temporals.format(question.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
     </tr>
     </tbody>
 </table>
