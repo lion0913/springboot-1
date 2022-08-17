@@ -6,6 +6,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,11 +23,11 @@ public class QuestionRepositoryTest {
     private QuestionRepository questionRepository;
     private static int lastSampleDataId;
 
-    @BeforeEach
-    void beforeEach() {
-        clearData();
-        createSampleData();
-    }
+//    @BeforeEach
+//    void beforeEach() {
+//        clearData();
+//        createSampleData();
+//    }
 
     public static int createSampleData(QuestionRepository questionRepository) {
         Question q1 = new Question();
@@ -130,5 +134,13 @@ public class QuestionRepositoryTest {
         Question q = qList.get(0);
 
         assertThat(q.getSubject()).isEqualTo("sbb가 무엇인가요?");
+    }
+
+    @Test
+    void findAllPageable() {
+        Pageable pageable = PageRequest.of(0, 10);
+        Page<Question> pages = questionRepository.findAll(pageable);
+
+        System.out.println(pages.getTotalPages());
     }
 }

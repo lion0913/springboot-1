@@ -8,6 +8,7 @@ import com.ll.exam.sbb.repository.QuestionRepository;
 import com.ll.exam.sbb.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -25,12 +26,12 @@ public class QuestionController
     private final QuestionService questionService;
 
     @GetMapping("/list")
-    public String showList(Model model) {
-        List<Question> questionList = questionService.findAll();
+    public String list(Model model, @RequestParam(defaultValue = "0") int page) {
+        Page<Question> paging = questionService.getList(page);
 
         // 미래에 실행된 question_list.html 에서
         // questionList 라는 이름으로 questionList 변수를 사용할 수 있다.
-        model.addAttribute("questionList", questionList);
+        model.addAttribute("paging", paging);
 
         return "question_list";
     }
