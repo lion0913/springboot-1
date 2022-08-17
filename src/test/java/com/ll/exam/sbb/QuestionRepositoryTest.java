@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,6 +37,15 @@ public class QuestionRepositoryTest {
         q2.setContent("id는 자동으로 생성되나요?");
         q2.setCreatedDate(LocalDateTime.now());
         questionRepository.save(q2);
+
+        IntStream.rangeClosed(3,300).forEach(i -> {
+            Question q = new Question();
+            q.setSubject("%d번 질문".formatted(i));
+            q.setContent("%d번 질문의 내용".formatted(i));
+            q.setCreatedDate(LocalDateTime.now());
+
+            questionRepository.save(q);
+        });
 
         return q2.getId();
     }
