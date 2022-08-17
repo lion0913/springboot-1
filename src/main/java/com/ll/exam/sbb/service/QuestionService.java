@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,5 +23,14 @@ public class QuestionService {
         Question q = questionRepository.findById(id).orElse(null);
 
         return q;
+    }
+
+    public void create(String subject, String content) {
+        Question question = new Question();
+        question.setCreatedDate(LocalDateTime.now());
+        question.setSubject(subject);
+        question.setContent(content);
+
+        questionRepository.save(question);
     }
 }

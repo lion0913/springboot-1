@@ -9,19 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequestMapping("/question")
 @Controller
 @RequiredArgsConstructor
 public class QuestionController
 {
     private final QuestionService questionService;
 
-    @RequestMapping("/question/list")
+    @GetMapping("/list")
     public String showList(Model model) {
         List<Question> questionList = questionService.findAll();
 
@@ -32,10 +31,21 @@ public class QuestionController
         return "question_list";
     }
 
-    @RequestMapping("/question/detail/{id}")
+    @GetMapping("/detail/{id}")
     public String detail(Model model, @PathVariable int id) {
         Question question = questionService.getQuestion(id);
         model.addAttribute("question", question);
         return "question_detail";
+    }
+
+    @GetMapping("/create")
+    public String showCreateForm() {
+        return "question_form";
+    }
+
+    @PostMapping("/create")
+    public String create(@RequestParam String subject, String content) {
+        questionService.create(subject, content);
+        return "redirect:/question/list";
     }
 }
