@@ -1,6 +1,8 @@
 package com.ll.exam.sbb.controller;
 
 
+import com.ll.exam.sbb.dto.AnswerForm;
+import com.ll.exam.sbb.dto.QuestionForm;
 import com.ll.exam.sbb.entity.Question;
 import com.ll.exam.sbb.repository.QuestionRepository;
 import com.ll.exam.sbb.service.QuestionService;
@@ -9,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping("/question")
@@ -32,20 +36,26 @@ public class QuestionController
     }
 
     @GetMapping("/detail/{id}")
-    public String detail(Model model, @PathVariable int id) {
+    public String detail(Model model, @PathVariable int id, AnswerForm answerForm) {
         Question question = questionService.getQuestion(id);
+
         model.addAttribute("question", question);
+
         return "question_detail";
     }
 
     @GetMapping("/create")
-    public String showCreateForm() {
+    public String showCreateForm(QuestionForm questionForm) {
         return "question_form";
     }
 
     @PostMapping("/create")
-    public String create(@RequestParam String subject, String content) {
-        questionService.create(subject, content);
+    public String create(Model model, @Valid QuestionForm questionForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "question_form";
+        }
+
+        questionService.create(questionForm.getSubject(), questionForm.getContent());
         return "redirect:/question/list";
     }
 }
