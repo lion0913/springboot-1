@@ -5,7 +5,7 @@
 >
 
 <div>하하</div>
-
+/
 <div layout:fragment="content" class="container my-3">
     <table class="table">
         <thead>
@@ -20,6 +20,9 @@
             <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
             <td>
                 <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a>
+                <span class="text-danger small ms-2" th:if="${#lists.size(question.answerList) > 0}"
+                      th:text="${#lists.size(question.answerList)}">
+                </span>
             </td>
             <td th:text="${#temporals.format(question.createdDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
         </tr>
