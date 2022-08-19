@@ -45,7 +45,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    // authenticationManager : 스프링 시큐리티에서의인증을담당한다.
+    // authenticationManager : 스프링 시큐리티에서의 인증을 담당한다.
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
