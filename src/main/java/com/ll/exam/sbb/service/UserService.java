@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final SiteUserRepository siteUserRepository;
     private final PasswordEncoder passwordEncoder;
+    public boolean existsByUsername(String username) {
+        return siteUserRepository.existsByUsername(username);
+    }
 
     public SiteUser create(String username, String email, String password) {
         SiteUser user = new SiteUser();

@@ -4,6 +4,7 @@ import com.ll.exam.sbb.dto.UserCreateForm;
 import com.ll.exam.sbb.service.UserService;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.implementation.bind.MethodDelegationBinder;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,9 +36,29 @@ public class UserController {
             return "signup_form";
         }
 
-        userService.create(userCreateForm.getUsername(),
-                userCreateForm.getEmail(), userCreateForm.getPassword1());
+        try {
+            userService.create(userCreateForm.getUsername(),
+                    userCreateForm.getEmail(), userCreateForm.getPassword1());
+        } catch (DataIntegrityViolationException e) {
+            if(userService.existsByUsername(userCreateForm.getUsername()) == true) {
+                bindingResult.reject("signupFailed", "유저네임이 존재합니다.");
+            } else {
+                bindingResult.reject("signupFailed", "이메일이 존재합니다.");
+            }
+
+            return "signup_form";
+        } catch (Exception e) {
+            e.printStackTrace();
+            bindingResult.reject("signupFailed", e.getMessage());
+            return "signup_form";
+        }
+
 
         return "redirect:/question/list";
+    }
+
+    @GetMapping("/login")
+    public String login() {
+        return "login_form";
     }
 }
