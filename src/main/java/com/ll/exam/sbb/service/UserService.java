@@ -1,10 +1,8 @@
 package com.ll.exam.sbb.service;
 
 import com.ll.exam.sbb.entity.SiteUser;
-import com.ll.exam.sbb.repository.SiteUserRepository;
+import com.ll.exam.sbb.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.realm.UserDatabaseRealm;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-    private final SiteUserRepository siteUserRepository;
+    private final UserRepository siteUserRepository;
     private final PasswordEncoder passwordEncoder;
     public boolean existsByUsername(String username) {
         return siteUserRepository.existsByUsername(username);

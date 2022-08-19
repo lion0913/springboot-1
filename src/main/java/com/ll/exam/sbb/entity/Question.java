@@ -24,6 +24,8 @@ public class Question {
 
     private LocalDateTime createdDate;
 
+
+
     @OneToMany(mappedBy = "question",cascade = {CascadeType.ALL})
     private List<Answer> answerList;
 
