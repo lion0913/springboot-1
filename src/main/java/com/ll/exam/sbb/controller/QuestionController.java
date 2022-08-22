@@ -4,8 +4,10 @@ package com.ll.exam.sbb.controller;
 import com.ll.exam.sbb.dto.AnswerForm;
 import com.ll.exam.sbb.dto.QuestionForm;
 import com.ll.exam.sbb.entity.Question;
+import com.ll.exam.sbb.entity.SiteUser;
 import com.ll.exam.sbb.repository.QuestionRepository;
 import com.ll.exam.sbb.service.QuestionService;
+import com.ll.exam.sbb.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @RequestMapping("/question")
@@ -24,6 +27,8 @@ import java.util.List;
 public class QuestionController
 {
     private final QuestionService questionService;
+
+    private final UserService userService;
 
     @GetMapping("/list")
     public String list(Model model, @RequestParam(defaultValue = "0") int page) {
@@ -51,12 +56,13 @@ public class QuestionController
     }
 
     @PostMapping("/create")
-    public String create(Model model, @Valid QuestionForm questionForm, BindingResult bindingResult) {
+    public String create(Principal principal, Model model, @Valid QuestionForm questionForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "question_form";
         }
 
-        questionService.create(questionForm.getSubject(), questionForm.getContent());
+        SiteUser siteUser = userService.getUser(principal.getName());
+        questionService.create(questionForm.getSubject(), questionForm.getContent(), siteUser);
         return "redirect:/question/list";
     }
 }

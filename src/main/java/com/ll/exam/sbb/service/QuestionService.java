@@ -1,6 +1,7 @@
 package com.ll.exam.sbb.service;
 
 import com.ll.exam.sbb.entity.Question;
+import com.ll.exam.sbb.entity.SiteUser;
 import com.ll.exam.sbb.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +28,12 @@ public class QuestionService {
         return q;
     }
 
-    public void create(String subject, String content) {
+    public void create(String subject, String content, SiteUser author) {
         Question question = new Question();
         question.setCreatedDate(LocalDateTime.now());
         question.setSubject(subject);
         question.setContent(content);
+        question.setAuthor(author);
 
         questionRepository.save(question);
     }
