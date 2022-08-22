@@ -46,4 +46,12 @@ public class QuestionService {
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts)); // 한 페이지에 10까지 가능
         return questionRepository.findAll(pageable);
     }
+
+    public void modify(Question question, String subject, String content) {
+        question.setSubject(subject);
+        question.setContent(content);
+        question.setModifyDate(LocalDateTime.now());
+
+        questionRepository.save(question);
+    }
 }
