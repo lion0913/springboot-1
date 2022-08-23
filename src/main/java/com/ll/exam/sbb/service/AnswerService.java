@@ -32,4 +32,11 @@ public class AnswerService {
     public void delete(Answer answer) {
         answerRepository.delete(answer);
     }
+
+    public void modify(Answer answer, String content) {
+        answer.setContent(content);
+        answer.setModifyDate(LocalDateTime.now());
+
+        answerRepository.save(answer);
+    }
 }
