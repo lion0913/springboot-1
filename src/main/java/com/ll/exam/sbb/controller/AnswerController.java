@@ -94,7 +94,7 @@ public class AnswerController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
         answerService.modify(answer, answerForm.getContent());
-        return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
+        return "redirect:/question/detail/%s#answer_%d".formatted(answer.getQuestion().getId(), id);
     }
 
     @PreAuthorize("isAuthenticated()")
