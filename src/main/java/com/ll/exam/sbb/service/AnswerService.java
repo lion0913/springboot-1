@@ -24,4 +24,12 @@ public class AnswerService {
 
         answerRepository.save(answer);
     }
+
+    public Answer findById(int id) {
+        return answerRepository.findById(id).orElse(null);
+    }
+
+    public void delete(Answer answer) {
+        answerRepository.delete(answer);
+    }
 }

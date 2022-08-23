@@ -53,15 +53,15 @@ public class QuestionRepositoryTest {
         q2.setAuthor(user);
         questionRepository.save(q2);
 
-        IntStream.rangeClosed(3,300).forEach(i -> {
-            Question q = new Question();
-            q.setSubject("%d번 질문".formatted(i));
-            q.setContent("%d번 질문의 내용".formatted(i));
-            q.setCreatedDate(LocalDateTime.now());
-            q.setAuthor(user);
-
-            questionRepository.save(q);
-        });
+//        IntStream.rangeClosed(3,300).forEach(i -> {
+//            Question q = new Question();
+//            q.setSubject("%d번 질문".formatted(i));
+//            q.setContent("%d번 질문의 내용".formatted(i));
+//            q.setCreatedDate(LocalDateTime.now());
+//            q.setAuthor(user);
+//
+//            questionRepository.save(q);
+//        });
 
     }
 

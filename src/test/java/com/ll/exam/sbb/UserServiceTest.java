@@ -39,8 +39,8 @@ public class UserServiceTest {
         answerRepository.deleteAll();
         answerRepository.truncate();
 
-//        questionRepository.deleteAll();
-//        questionRepository.truncate();
+        questionRepository.deleteAll();
+        questionRepository.truncate();
 
         userRepository.deleteAll();
         userRepository.truncate();
