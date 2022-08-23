@@ -45,13 +45,13 @@ public class AnswerController {
         SiteUser siteUser = userService.getUser(principal.getName());
 
         //답변 등록 시작
-        answerService.create(question, answerForm.getContent(), siteUser);
+        Answer answer = answerService.create(question, answerForm.getContent(), siteUser);
 
 
         //답변 등록 끝
 
         //답변 등록 후 다시 디테일 화면으로 돌아간다는 의미
-        return "redirect:/question/detail/%d".formatted(id);
+        return "redirect:/question/detail/%d#answer_%d".formatted(id, answer.getId());
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -106,7 +106,7 @@ public class AnswerController {
 
         answerService.vote(answer, siteUser);
 
-        return "redirect:/question/detail/%s".formatted(answer.getQuestion().getId());
+        return "redirect:/question/detail/%s#answer_%d".formatted(answer.getQuestion().getId(), id);
     }
 
 }
