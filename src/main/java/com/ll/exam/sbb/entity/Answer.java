@@ -3,6 +3,7 @@ package com.ll.exam.sbb.entity;
 import lombok.Data;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Data
 @Entity
@@ -18,6 +19,9 @@ public class Answer {
     private LocalDateTime modifyDate;
     @ManyToOne
     private SiteUser author;
+
+    @ManyToMany
+    Set<SiteUser> voter;
 
     @ManyToOne
     private Question question;
