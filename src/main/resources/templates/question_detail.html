@@ -58,16 +58,21 @@
                     <div th:if="${answer.modifyDate != null}" th:text="|수정일 : ${#temporals.format(answer.modifyDate, 'yyyy-MM-dd HH:mm')}|"></div>
                 </div>
             </div>
-        </div>
-        <div class="my-3">
-            <a th:href="@{|/answer/modify/${answer.id}|}" class="btn btn-sm btn-outline-secondary"
-               sec:authorize="isAuthenticated()"
-               th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
-               th:text="수정"></a>
-            <a onClick="if(!confirm('정말로 삭제하시겠습니까?')) return false;" th:href="@{|/answer/delete/${answer.id}|}" class="btn btn-sm btn-outline-secondary"
-               sec:authorize="isAuthenticated()"
-               th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
-               th:text="삭제"></a>
+            <div class="my-3">
+                <a onclick="if ( !confirm('이 답변을 추천하시겠습니까?') ) return false;" class="btn btn-sm btn-outline-secondary"
+                   th:href="@{|/answer/vote/${answer.id}|}">
+                    추천
+                    <span class="badge rounded-pill bg-success" th:text="${#lists.size(answer.voter)}"></span>
+                </a>
+                <a th:href="@{|/answer/modify/${answer.id}|}" class="btn btn-sm btn-outline-secondary"
+                   sec:authorize="isAuthenticated()"
+                   th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
+                   th:text="수정"></a>
+                <a onClick="if(!confirm('정말로 삭제하시겠습니까?')) return false;" th:href="@{|/answer/delete/${answer.id}|}" class="btn btn-sm btn-outline-secondary"
+                   sec:authorize="isAuthenticated()"
+                   th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
+                   th:text="삭제"></a>
+            </div>
         </div>
     </div>
     <!-- 답변 반복 끝  -->

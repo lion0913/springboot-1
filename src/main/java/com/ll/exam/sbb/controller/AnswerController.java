@@ -10,6 +10,7 @@ import com.ll.exam.sbb.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -94,6 +95,18 @@ public class AnswerController {
         }
         answerService.modify(answer, answerForm.getContent());
         return String.format("redirect:/question/detail/%s", answer.getQuestion().getId());
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/vote/{id}")
+    public String voteAnswer(Principal principal, @PathVariable("id") int id) {
+        Answer answer = answerService.findById(id);
+
+        SiteUser siteUser = userService.getUser(principal.getName());
+
+        answerService.vote(answer, siteUser);
+
+        return "redirect:/question/detail/%s".formatted(answer.getQuestion().getId());
     }
 
 }
