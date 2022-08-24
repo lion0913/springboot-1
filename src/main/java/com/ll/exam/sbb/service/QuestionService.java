@@ -48,7 +48,7 @@ public class QuestionService {
             return questionRepository.findAll(pageable);
         }
 
-        return questionRepository.findBySubjectContainsOrContentContains(kw, kw, pageable);
+        return questionRepository.findDistinctBySubjectContainsOrContentContainsOrAuthor_usernameContainsOrAnswerList_contentContains(kw, kw, kw, kw, pageable);
     }
 
     public void modify(Question question, String subject, String content) {
