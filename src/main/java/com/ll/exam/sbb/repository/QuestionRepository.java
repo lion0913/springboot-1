@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
@@ -29,5 +30,10 @@ public interface QuestionRepository extends JpaRepository<Question, Integer>, Re
     @Query(value = "ALTER TABLE question AUTO_INCREMENT = 1", nativeQuery = true)
     void truncate();
 
-    List<Question> findBySubjectLike(String s);
+
+//    @Query("select q from Question as q where q.content like %:kw% or q.subject like %:kw%  ")
+//    Page<Question> findByKeyword(Pageable pageable, @Param("kw") String kw);
+
+
+    Page<Question> findBySubjectContains(String kw, Pageable pageable);
 }

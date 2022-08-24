@@ -38,13 +38,17 @@ public class QuestionService {
         questionRepository.save(question);
     }
 
-    public Page<Question> getList(int page) {
+    public Page<Question> getList(int page, String kw) {
 //        정렬 조건넣기(생성일 순으로 정렬)
         List<Sort.Order> sorts = new ArrayList<>();
         sorts.add(Sort.Order.desc("createdDate"));
 
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts)); // 한 페이지에 10까지 가능
-        return questionRepository.findAll(pageable);
+        if ( kw == null || kw.trim().length() == 0 ) {
+            return questionRepository.findAll(pageable);
+        }
+
+        return questionRepository.findBySubjectContains(kw, pageable);
     }
 
     public void modify(Question question, String subject, String content) {
