@@ -24,7 +24,9 @@ public class QuestionService {
 
     public Question getQuestion(int id) {
         Question q = questionRepository.findById(id).orElse(null);
+        q.setHit(q.getHit()+1);
 
+        questionRepository.save(q);
         return q;
     }
 

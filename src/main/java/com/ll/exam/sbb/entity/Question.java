@@ -32,6 +32,8 @@ public class Question {
     @OneToMany(mappedBy = "question",cascade = {CascadeType.ALL})
     private List<Answer> answerList;
 
+    private int hit = 0;
+
     @ManyToMany
     Set<SiteUser> voter;
 
