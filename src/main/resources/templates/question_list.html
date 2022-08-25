@@ -3,10 +3,19 @@
     xmlns:th="http://www.thymeleaf.org"
     layout:decorate="~{layout}"
 >
-
-<div>하하</div>
-/
 <div layout:fragment="content" class="container my-3">
+    <div class="row my-3">
+        <div class="col-6">
+            <a th:href="@{/question/create}" class="btn btn-outline-info float-right" >질문 등록하기</a>
+        </div>
+        <div class="col-6">
+
+            <form class="input-group">
+                <input type="text" class="form-control" name="kw" placeholder="검색어를 입력해주세요." th:value="${param.kw}">
+                <button class="btn btn-outline-secondary" type="submit">검색</button>
+            </form>
+        </div>
+    </div>
     <table class="table">
         <thead>
         <tr>
@@ -56,6 +65,10 @@
             </li>
         </ul>
     </div>
-    <a th:href="@{/question/create}" class="btn btn-outline-info float-right" >질문 등록하기</a>
+
+    <form th:action="@{/question/list}" method="get" id="searchForm">
+        <input type="hidden" id="kw" name="kw" th:value="${kw}">
+        <input type="hidden" id="page" name="page" th:value="${paging.number}">
+    </form>
 </div>
 </html>
