@@ -28,11 +28,11 @@ public class QuestionRepositoryTest {
     private UserRepository userRepository;
 
 
-    @BeforeEach
-    void beforeEach() {
-        clearData();
-        createSampleData();
-    }
+//    @BeforeEach
+//    void beforeEach() {
+//        clearData();
+//        createSampleData();
+//    }
 
      static void createSampleData(QuestionRepository questionRepository, UserRepository userRepository) {
         SiteUser user = userRepository.findById(2).orElse(null);
@@ -80,7 +80,15 @@ public class QuestionRepositoryTest {
 
     @Test
     void t1() {
+        IntStream.rangeClosed(3,50).forEach(i -> {
+            Question q = new Question();
+            q.setSubject("%d번 질문".formatted(i));
+            q.setContent("%d번 질문의 내용".formatted(i));
+            q.setCreatedDate(LocalDateTime.now());
+            q.setAuthor(userRepository.findById(3).orElse(null));
 
+            questionRepository.save(q);
+        });
     }
 
 }
