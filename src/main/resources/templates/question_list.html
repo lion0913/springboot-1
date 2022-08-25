@@ -12,7 +12,7 @@
 
             <form class="input-group">
                 <input type="text" class="form-control" name="kw" placeholder="검색어를 입력해주세요." th:value="${param.kw}">
-                <select class="form-select flex-grow-2" name="sortCode" th:value="${param.sortCode}">
+                <select onchange="$(this).closest('form').submit();" class="form-select flex-grow-2" name="sortCode" th:value="${param.sortCode}">
                     <option value="new">최신순</option>
                     <option value="old">오래된순</option>
                 </select>
