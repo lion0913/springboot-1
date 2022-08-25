@@ -12,6 +12,10 @@
 
             <form class="input-group">
                 <input type="text" class="form-control" name="kw" placeholder="검색어를 입력해주세요." th:value="${param.kw}">
+                <select class="form-select flex-grow-2" name="sortCode" value="new">
+                    <option value="new">최신순</option>
+                    <option value="old">오래된순</option>
+                </select>
                 <button class="btn btn-outline-secondary" type="submit">검색</button>
             </form>
         </div>
@@ -27,7 +31,7 @@
         </thead>
         <tbody>
         <tr th:each="question , loop : ${paging}">
-            <td th:text="${paging.getTotalElements - (paging.number * paging.size) - loop.index}"></td>
+            <td th:text="${question.id}"></td>
             <td>
                 <a th:href="@{|/question/detail/${question.id}|}" th:text="${question.subject}"></a>
                 <span class="text-danger small ms-2" th:if="${#lists.size(question.answerList) > 0}"

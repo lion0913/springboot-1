@@ -38,15 +38,27 @@ public class QuestionService {
         questionRepository.save(question);
     }
 
-    public Page<Question> getList(int page, String kw) {
+    public Page<Question> getList(int page, String kw, String sortCode) {
 //        정렬 조건넣기(생성일 순으로 정렬)
         List<Sort.Order> sorts = new ArrayList<>();
-        sorts.add(Sort.Order.desc("createdDate"));
+        if(sortCode == null || sortCode.equals("new")) {
+            sorts.add(Sort.Order.desc("createdDate"));
+        } else {
+            sorts.add(Sort.Order.asc("createdDate"));
+        }
+
 
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts)); // 한 페이지에 10까지 가능
         if ( kw == null || kw.trim().length() == 0 ) {
             return questionRepository.findAll(pageable);
         }
+//        if(sortCode.equals("old")) {
+//            return questionRepository.findDistinctBySubjectContainsOrContentContainsOrAuthor_usernameContainsOrAnswerList_contentContainsOrderByCreatedDateAsc(kw, kw, kw, kw, pageable);
+//
+//        } else {
+//            return questionRepository.findDistinctBySubjectContainsOrContentContainsOrAuthor_usernameContainsOrAnswerList_contentContainsOrderByCreatedDateDesc(kw, kw, kw, kw, pageable);
+//
+//        }
 
         return questionRepository.findDistinctBySubjectContainsOrContentContainsOrAuthor_usernameContainsOrAnswerList_contentContains(kw, kw, kw, kw, pageable);
     }

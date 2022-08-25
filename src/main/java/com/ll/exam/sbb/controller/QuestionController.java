@@ -34,13 +34,15 @@ public class QuestionController
     private final UserService userService;
 
     @GetMapping("/list")
-    public String list(Model model, @RequestParam(defaultValue = "0") int page, @RequestParam(required = false) String kw) {
-        Page<Question> paging = questionService.getList(page,kw);
+    public String list(Model model, @RequestParam(defaultValue = "0") int page, @RequestParam(required = false) String kw,  @RequestParam(defaultValue="new", required = false) String sortCode) {
+        System.out.println("sortCode: " +sortCode);
+        Page<Question> paging = questionService.getList(page,kw, sortCode);
 
         // 미래에 실행된 question_list.html 에서
         // questionList 라는 이름으로 questionList 변수를 사용할 수 있다.
         model.addAttribute("paging", paging);
         model.addAttribute("kw",kw);
+        model.addAttribute("sortCode",sortCode);
 
         return "question_list";
     }
